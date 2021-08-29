@@ -32,7 +32,7 @@ client.connect(err => {
                 }
             })
     })
-    app.post('/submitOrder', (req, res) => {
+    app.post('/Order', (req, res) => {
         customersOrders.insertOne(req.body)
             .then(result => {
                 res.send(result.insertedCount > 0)
