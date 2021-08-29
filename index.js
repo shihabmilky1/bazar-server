@@ -1,6 +1,7 @@
 const express = require("express")
 const cors = require("cors")
 const bodyParser = require('body-parser')
+require('dotenv').config();
 
 const { MongoClient } = require('mongodb');
 const uri = "mongodb+srv://shihabmilky1:shihabmilky1@cluster0.4czm1.mongodb.net/Bazar?retryWrites=true&w=majority";
@@ -56,4 +57,4 @@ client.connect(err => {
 
 });
 
-app.listen(3001, () => console.log('Working'))
+app.listen(process.env.PORT || 3001)
