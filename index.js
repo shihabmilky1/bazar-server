@@ -41,8 +41,10 @@ client.connect(err => {
     app.post('/payments', (req, res) => {
         let { id, cart } = req.body;
         const total = cart.reduce((total, cart) => total + cart.price, 0)
+        const discount = cart.reduce((discount, cart) => discount + cart.discount, 0)
+        const totalAmount = total - discount;
         const payment = stripe.paymentIntents.create({
-            amount: total * 100,
+            amount: totalAmount * 100,
             currency: 'usd',
             description: 'Internet Service',
             payment_method: id,
