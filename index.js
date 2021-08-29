@@ -6,6 +6,7 @@ const { MongoClient } = require('mongodb');
 const uri = "mongodb+srv://shihabmilky1:shihabmilky1@cluster0.4czm1.mongodb.net/Bazar?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
+const stripe = require('stripe')("sk_test_51IeGgvCvYK065ALoE1Ql7FJpupSquqdVorHXmoOKuRiD62BQ1FCu5YBAB7yCnzevVvbWtTetEfDKQH5tFAXFLOfT004inC5BJJ")
 const app = express()
 
 app.use(cors())
