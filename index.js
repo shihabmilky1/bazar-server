@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 })
 client.connect(err => {
     const admin = client.db("Bazar").collection("admin");
-    const admin = client.db("Bazar").collection("customersOrders");
+    const customersOrders = client.db("Bazar").collection("customersOrders");
     app.get('/isAdmin', (req, res) => {
         console.log(req.query.email)
         admin.find({ email: req.query.email })
