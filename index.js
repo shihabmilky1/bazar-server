@@ -58,7 +58,18 @@ client.connect(err => {
             success: true,
         })
     })
-
+    app.post('/userOrder', (req, res) => {
+        orders.find({ userEmail: req.body.email })
+            .toArray((err, doc) => {
+                res.send(doc)
+            })
+    })
+    app.get('/orderDetail/:id', (req, res) => {
+        orders.find({ _id: ObjectId(req.params.id) })
+            .toArray((err, doc) => {
+                res.send(doc)
+            })
+    })
     app.post('/saveUser', (req, res) => {
         saveUser.insertOne(req.body)
             .then(result => {
