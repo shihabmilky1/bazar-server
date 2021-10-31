@@ -20,6 +20,8 @@ app.get('/', (req, res) => {
 client.connect(err => {
     const admin = client.db("Bazar").collection("admin");
     const customersOrders = client.db("Bazar").collection("customersOrders");
+    const saveUser = client.db("Bazar").collection("saveUser");
+    //Admin
     app.get('/isAdmin', (req, res) => {
         console.log(req.query.email)
         admin.find({ email: req.query.email })
@@ -34,7 +36,6 @@ client.connect(err => {
     })
     app.post('/Order', (req, res) => {
         customersOrders.insertOne(req.body)
-        console.log(req.body)
             .then(result => {
                 res.send(result.insertedCount > 0)
             })
@@ -56,6 +57,13 @@ client.connect(err => {
             message: 'Payment Successful',
             success: true,
         })
+    })
+
+    app.post('/saveUser', (req, res) => {
+        saveUser.insertOne(req.body)
+            .then(result => {
+                res.send(result.insertedCount > 0)
+            })
     })
 
 });
