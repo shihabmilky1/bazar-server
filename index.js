@@ -59,13 +59,13 @@ client.connect(err => {
         })
     })
     app.post('/userOrder', (req, res) => {
-        orders.find({ userEmail: req.body.email })
+        customersOrders.find({ userEmail: req.body.email })
             .toArray((err, doc) => {
                 res.send(doc)
             })
     })
     app.get('/orderDetail/:id', (req, res) => {
-        orders.find({ _id: ObjectId(req.params.id) })
+        customersOrders.find({ _id: ObjectId(req.params.id) })
             .toArray((err, doc) => {
                 res.send(doc)
             })
