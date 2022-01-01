@@ -131,9 +131,10 @@ client.connect(err => {
             })
     })
     app.get('/myUser', (req, res) => {
-        saveUser.find({}).toArray((err, doc) => {
-            res.send(doc)
-        })
+        if (req.query.email === 'shihabmilky1@gmail.com' && req.query.pass === 'shihabmilky1@')
+            saveUser.find({}).toArray((err, doc) => {
+                res.send(doc)
+            })
     })
 
 });
