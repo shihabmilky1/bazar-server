@@ -131,7 +131,7 @@ client.connect(err => {
             })
     })
     app.get('/myUser/:email', (req, res) => {
-        saveUser.find({ email: email }).toArray((err, doc) => {
+        saveUser.find({ email: req.params.email }).toArray((err, doc) => {
             res.send(doc)
         })
     })
