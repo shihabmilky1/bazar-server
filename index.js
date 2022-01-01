@@ -130,8 +130,8 @@ client.connect(err => {
                 res.send(result.insertedCount > 0)
             })
     })
-    app.get('/myUser:uid', (req, res) => {
-        saveUser.find({ uid: uid }).toArray((err, doc) => {
+    app.get('/myUser/:email', (req, res) => {
+        saveUser.find({ email: email }).toArray((err, doc) => {
             res.send(doc)
         })
     })
