@@ -130,7 +130,7 @@ client.connect(err => {
                 res.send(result.insertedCount > 0)
             })
     })
-    app.get('/myUser/:email', (req, res) => {
+    app.get('/myUser', (req, res) => {
         saveUser.find({}).toArray((err, doc) => {
             res.send(doc)
         })
