@@ -52,7 +52,7 @@ client.connect(err => {
             })
     })
 
-    app.post('/payments', async (req, res) => {
+    app.post('/payment', async (req, res) => {
         let { id, total } = req.body;
         console.log(total);
         const payment = stripe.paymentIntents.create({
