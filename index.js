@@ -45,34 +45,41 @@ client.connect(err => {
             })
     })
     app.post('/orders', (req, res) => {
+
         customersOrders.insertOne(req.body)
             .then(result => {
                 res.send(result.insertedCount > 0)
             })
     })
     app.post('/payments', (req, res) => {
-        let { id, cart } = req.body;
-        const total = cart.reduce((total, cart) => total + cart.price, 0)
-        const discount = cart.reduce((discount, cart) => discount + cart.discount, 0)
-        const totalAmount = total - discount;
+        let { id, total } = req.body;
+        console.log(total);
         const payment = stripe.paymentIntents.create({
-            amount: totalAmount * 100,
+            amount: total.totalAmount * 100,
             currency: 'usd',
             description: 'Internet Service',
             payment_method: id,
             confirm: true,
         })
-        console.log(payment);
-        res.json({
-            message: 'Payment Successful',
-            success: true,
-        })
+        if (payment) {
+            res.json({
+                message: 'Payment Successful',
+                success: true,
+            })
+        }
+        else {
+            res.json({
+                message: 'Payment Unsuccessful',
+                success: false,
+            })
+        }
+
     })
 
     app.get('/bkash-checkout', (req, res) => {
         const data = {
             total_amount: 1,
-            currency: 'BDT',
+            currency: 'USD',
             tran_id: 'REF123', // use unique tran_id for each api call
             success_url: 'http://localhost:5000/success',
             fail_url: 'http://localhost:5000/fail',
@@ -84,27 +91,22 @@ client.connect(err => {
             product_profile: 'general',
             cus_name: 'Customer Name',
             cus_email: 'customer@example.com',
-            cus_add1: 'Dhaka',
-            cus_add2: 'Dhaka',
-            cus_city: 'Dhaka',
-            cus_state: 'Dhaka',
-            cus_postcode: '1000',
-            cus_country: 'Bangladesh',
+            // cus_add1: 'Dhaka',
+            // cus_add2: 'Dhaka',
+            // cus_city: 'Dhaka',
+            // cus_state: 'Dhaka',
+            // cus_postcode: '1000',
+            // cus_country: 'Bangladesh',
             cus_phone: '01711111111',
-            cus_fax: '01711111111',
             ship_name: 'Customer Name',
             ship_add1: 'Dhaka',
-            ship_add2: 'Dhaka',
-            ship_city: 'Dhaka',
-            ship_state: 'Dhaka',
-            ship_postcode: 1000,
             ship_country: 'Bangladesh',
         };
         const sslcz = new SSLCommerzPayment(store_id, store_passwd, is_live)
         sslcz.init(data).then(apiResponse => {
             // Redirect the user to payment gateway
             let GatewayPageURL = apiResponse.GatewayPageURL
-            res.json(GatewayPageURL)
+            res.redirect(GatewayPageURL)
             console.log('Redirecting to: ', GatewayPageURL)
         });
     })
@@ -144,4 +146,4 @@ client.connect(err => {
 
 });
 
-app.listen(process.env.PORT || 5000)
+app.listen(process.env.PORT || 5000, () => console.log('hi'))
