@@ -51,6 +51,7 @@ client.connect(err => {
                 res.send(result.insertedCount > 0)
             })
     })
+
     app.post('/payments', (req, res) => {
         let { id, total } = req.body;
         console.log(total);
