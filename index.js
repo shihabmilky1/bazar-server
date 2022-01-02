@@ -52,7 +52,7 @@ client.connect(err => {
             })
     })
 
-    app.post('/payments', (req, res) => {
+    app.post('/payments', async (req, res) => {
         let { id, total } = req.body;
         console.log(total);
         const payment = stripe.paymentIntents.create({
@@ -66,6 +66,7 @@ client.connect(err => {
             res.json({
                 message: 'Payment Successful',
                 success: true,
+                total
             })
         }
         else {
